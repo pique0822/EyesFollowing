@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--Miguel del Rio April 14th 2016-->
+	<style>
+		body{
+			background-color: blue;
+		}
+		.circle{
+			border-radius: 50%;
+			border:2px solid black;
+			width: 200px;
+			height: 200px;
+			background: #FFFFFF;
+			position:relative;
+			}
+		#left_eye_dot{
+			width:20px;
+			height:20px;
+			background: black;
+			position: absolute;
+			left:50%
+			
+		}
+		#right_eye_dot{
+			width:20px;
+			height:20px;
+			background: black;
+			position: absolute;
+			left:50%
+			
+		}
+		.overlay{
+			position: fixed;
+			width : 100%;
+			height: 100%;
+			left:5;
+			top:0;
+			z-index:10;
+		}
+		#cookie{
+			border-radius: 50px;
+			width: 100px;
+			height: 100px;
+			background: #ffd480;
+			position: absolute;
+		}
+	</style>
+	<script>
+		function followCookie()
+		{
+			/* can be used to make eyes follow mouse just replace cook with mouse
+			var mouseY = event.clientY;
+			var mouseX = event.clientX;
+			*/
+			var cookY = event.clientY;
+			var cookX = event.clientX;
+			
+			var left_dot = document.getElementById('left_eye_dot');
+			var right_dot = document.getElementById('right_eye_dot');
+			
+			var LEye = document.getElementById('left_eye_outline');
+			var REye = document.getElementById('right_eye_outline');
+			
+			var radius = (226-50)/2;	
+			//(98,134)
+			centerXL = 98;
+			centerYL = 134;
+			//(186,134)
+			centerXR = 313;
+			centerYR = 134;
+			
+			//left eye
+			
+			var diffXL = cookX - centerXL;
+			var diffYL = cookY - centerYL;
+			var angleL = Math.atan2(diffYL, diffXL);
+			
+			var xL = centerXL + radius * Math.cos(angleL);
+			var yL = centerYL + radius * Math.sin(angleL);
+
+			if(cookX<170 && cookX>30 && (cooky<200 && cooky>70))
+			{
+				xL = cookX;
+				yL = cookY;
+			}
+			
+			
+			//Right eye
+			var diffXR = cookX - centerXR;
+			var diffYR= cookY - centerYR;
+			var angleR = Math.atan2(diffYR, diffXR);
+			
+			var xR = centerXR + radius * Math.cos(angleR);
+			var yR = centerYR + radius * Math.sin(angleR);
+
+			if(cookX<390 && cookX>225 && (cookY<200 && cookY>70))
+			{
+				xR = cookX;
+				yR = cookY;
+			}
+			
+			document.getElementById('coord').innerHTML ="Hello there";//"xPosM:: " + mouseX + "YposM:: " + mouseY + " xR" + xR + " xL " + xL;
+			
+			
+			left_dot.style.top = yL-50+"px";
+			left_dot.style.left = xL-10+"px";
+			
+			right_dot.style.top = yR-50+"px";
+			right_dot.style.left = xR-227+"px";
+		}
+		function cookieTime()
+		{
+			
+			var cookie = document.getElementById('cookie');
+			var mouseY = event.clientY;
+			var mouseX = event.clientX;
+			
+			cookie.style.top = mouseY-document.getElementById("cookie").offsetWidth/2+"px";
+			cookie.style.left = mouseX-document.getElementById("cookie").offsetWidth/2+"px";
+			document.getElementById('coord').innerHTML ="move";
+			
+			followCookie();
+		}
+	</script>
+</head>
+<body>
+<div class="overlay">
+	<p id="coord"> Position </p>
+	<table>
+		<tr>
+			<td>
+				<div class="circle" id="left_eye_outline" style="border-radius: 50px
+					width: 200px
+					height: 200px
+					background: #FFFFFF">
+					<div class="circle" id ="left_eye_dot">
+				
+					</div>
+				</div>
+			</td>
+			<td>
+				<div class="circle" id="right_eye_outline" style="border-radius: 50px
+					width: 200px
+					height: 200px
+					background: #FFFFFF">
+					<div class="circle" id ="right_eye_dot">
+			
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div class="circle" id="cookie" onmousemove = "cookieTime()">
+</div>
+</body>
+</html>
